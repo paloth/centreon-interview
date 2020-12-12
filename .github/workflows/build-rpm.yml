@@ -1,0 +1,8 @@
+name: Build RPM
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    container:
+      image: rpmbuild/centos7
