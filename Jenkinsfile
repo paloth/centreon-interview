@@ -1,9 +1,8 @@
 pipeline {
-    agent any
     stages {
         stage('Build') {
             agent {
-                docker { image 'rpmbuild/centos7' }
+                docker { image 'alpine:latest' }
             }
             steps {
                 echo 'Building..'
@@ -21,3 +20,4 @@ pipeline {
         }
     }
 }
+
