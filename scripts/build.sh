@@ -24,5 +24,5 @@ cd $HOME/rpmbuild
 rpmbuild -ba ./SPECS/build.spec
 # copy the rpms to the artifact directory, for jenkins.
 if [[ -d /artifacts ]]; then
-    cp ./RPMS/noarch/${PACKAGE}*.rpm /artifacts/
+    cp ./RPMS/noarch/${PACKAGE}*.rpm $HOME/artifacts/
 fi

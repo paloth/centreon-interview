@@ -1,38 +1,36 @@
-pipeline {
-    agent none
-    stages {
-        stage('Setup'){
-            steps{
-                echo 'Setup environment'
-                mkdir artifacts
-            }
+node {
+    try {
+        stage('Clone repository') {
+            /* Let's make sure we have the repository cloned to our workspace */
+            checkout scm
         }
-        stage('Build') {
-            steps {
-                echo 'Building container'
-                docker.build("rpm-build")
-            }
+
+        stage('Setup') {
+            /* Let's make sure we have the repository cloned to our workspace */
+            echo 'Setup environment'
+            sh 'if [ ! -d artifacts ]; then mkdir artifacts; fi'
+            sh 'ls -al'
         }
-        stage('Test') {
-            agent {
-                docker { 
-                    image 'rpm-build'
-                    args '-v "$(pwd)"/artifacts:/artifacts'
-                    args '-e VERSION=1'
-                    args '-e RELEASE=0'
-                    args '-e PACKAGE="list_repo"'
-                    args '--user rpmbuild'
-                 }
-            }
-            steps {
-                echo 'Running building container..'
-            }
+
+        stage('Build image') {
+            /* This builds the actual image; synonymous to
+            * docker build on the command line */
+            echo 'Building container'
+            docker.build("rpm-build")
         }
-        stage('Deploy') {
-            steps {
-                ls -al artifacts/
-            }
+
+        stage('Test image') {
+            /* Ideally, we would run a test framework against our image.
+            * For this example, we're using a Volkswagen-type approach ;-) */
+            docker.image('rpm-build:latest').withRun('-v artifacts/:/home/rpmbuild/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user rpmbuild'){c -> sh "docker logs ${c.id}"}    
         }
     }
+    catch (e) {
+        echo 'This will run only if failed'
+        throw e
+    }
+    finally {
+        sh 'ls -al artifacts'
+        sh 'rm -rf artifacts'
+     }
 }
-
