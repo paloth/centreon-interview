@@ -5,7 +5,7 @@ if [ ! -f ./build.spec ]; then
     echo Sorry, can not find rpm spec file
     exit 1
 fi
-ls -al $HOME/artifacts
+
 cp build.spec $HOME/rpmbuild/SPECS
 # here I patch the spec file to feed it with the version and the release and the date
 sed -i $HOME/rpmbuild/SPECS/build.spec \

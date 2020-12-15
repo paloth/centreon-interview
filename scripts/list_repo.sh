@@ -2,7 +2,7 @@
 
 # Set ORGA with the first args provided to the script
 ORGA=$1
-TOKEN=6650d94bec03c326b4d3f041145f3335dcc45885
+TOKEN=$2
 
 # Get the total pages to request
 NB_PAGES=$(curl -si -I -H "Accept: application/vnd.github.v3+json" -H "Authorization: $TOKEN" https://api.github.com/orgs/$ORGA/repos | grep '^Link:' | sed -e 's/^Link:.*page=//g' -e 's/>.*$//g')
