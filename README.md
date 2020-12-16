@@ -34,6 +34,37 @@ aws.s3                                             R                    NS
 NS = Not Specified
 ```
 
+#### build.sh
+
+This script is the entrypoint of the container environment that build the rpm. It based on the [saule1508 work](http://saule1508.github.io/build-rpm-with-docker/)
+
+It sets up the package before the build:
+
+- Change values in the build.spec with `sed`
+- Package the sources in a tar.gz
+- Copy the package in the SOURCES directory of the **RPMBUILD** environment 
+
+The build script run the rpmbuild command and copy the artifact into the `/artifcacts` directory
+
+### Build
+
+The folder build contains the build.spec that describe the information and steps necessary for rpmbuild
+
+The first part describe the information provided to the rpm. This section is pretty explicit but here is the description of some parameters:
+
+-Source0 is the tar.gz prepared for the build. It is stored in the SOURCES directory of the **RPMBUILD** environment
+-BuildRoot is the path where rpmbuild while build the package
+
+In the *install* section is a shell script executed at the installation step
+
+The *post* section runs after the installation step.
+
+The *files* section contains all the file include in the rpm (Need to go deeper for this section)
+
+### Dockerfile
+
+
+
 RPM BUILD
 ```
 %prep
