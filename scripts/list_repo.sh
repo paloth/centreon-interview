@@ -1,13 +1,20 @@
 #!/bin/bash
 
-# Set ORGA with the first args provided to the script
-ORGA=$1
-TOKEN=$2
+if [ -z $1 ]; then
+    echo 'An organization name must be provided'
+else
+    # Set ORGA with the first args provided to the script
+    ORGA=$1
+fi
 
-# Get the total pages to request
-NB_PAGES=$(curl -si -I -H "Accept: application/vnd.github.v3+json" -H "Authorization: $TOKEN" https://api.github.com/orgs/$ORGA/repos | grep '^Link:' | sed -e 's/^Link:.*page=//g' -e 's/>.*$//g')
-
-# NB_PAGES=$(curl -si -I -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/$ORGA/repos | grep '^link:' | sed -e 's/^link:.*page=//g' -e 's/>.*$//g')
+if [ -z $2 ]; then
+    # Get the total pages to request with authentication
+    NB_PAGES=$(curl -si -I -H "Accept: application/vnd.github.v3+json" https://api.github.com/orgs/$ORGA/repos | grep '^link:' | sed -e 's/^link:.*page=//g' -e 's/>.*$//g')
+else
+    TOKEN=$2
+    # Get the total pages to request with authentication
+    NB_PAGES=$(curl -si -I -H "Accept: application/vnd.github.v3+json" -H "Authorization: $TOKEN" https://api.github.com/orgs/$ORGA/repos | grep '^Link:' | sed -e 's/^Link:.*page=//g' -e 's/>.*$//g')
+fi
 
 get_repos() {
     # Construct a list with filtered results
