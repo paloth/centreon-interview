@@ -16,7 +16,7 @@ node {
 
         stage('Build RPM') {
             echo 'Start container for RPM builder'
-            docker.image('rpm-build:latest').withRun('-v "$(pwd)"/artifacts/:/home/rpmbuild/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user 0'){
+            docker.image('rpm-build:latest').withRun('-v "$(pwd)"/artifacts/:/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user 0'){
                 c -> sh "docker logs ${c.id}"
             }    
         }
@@ -26,7 +26,7 @@ node {
         throw e
     }
     finally {
-        sh 'ls -al artifacts'
+        sh 'ls -al artifacts/'
         sh 'rm -rf artifacts'
      }
 }
