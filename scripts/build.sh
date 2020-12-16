@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /artifacts && touch text.txt
+
 cd /home/rpmbuild
 if [ ! -f ./build.spec ]; then
     echo Sorry, can not find rpm spec file
@@ -23,6 +25,6 @@ cd $HOME/rpmbuild
 
 rpmbuild -ba ./SPECS/build.spec
 # copy the rpms to the artifact directory, for jenkins.
-if [[ -d $HOME/artifacts ]]; then
-    cp ./RPMS/noarch/${PACKAGE}*.rpm $HOME/artifacts/
+if [[ -d /artifacts ]]; then
+    cp ./RPMS/noarch/${PACKAGE}*.rpm /artifacts/
 fi
