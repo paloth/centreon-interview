@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd /artifacts && touch text.txt
-
 cd /home/rpmbuild
 if [ ! -f ./build.spec ]; then
     echo Sorry, can not find rpm spec file
@@ -14,7 +12,6 @@ sed -i $HOME/rpmbuild/SPECS/build.spec \
     -e "s/{{package}}/${PACKAGE}/g" \
     -e "s/{{version}}/${VERSION}/g" \
     -e "s/{{release}}/${RELEASE}/g"
-# -e "s/{{date}}/$(date +\"%a %b %d %Y\")/" \
 
 # prepare a tar.gz file with the sources and copy it  to the SOURCES directory
 tar -zcf ${PACKAGE}.tar.gz ./src
