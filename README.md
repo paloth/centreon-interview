@@ -110,13 +110,14 @@ RPM build container permission to write into jenkins fs. Not able to copy the rp
 
 Build
 
-- Add variable to the build for version, release, changelog
+- Add variables to the build for version, release, changelog
 
 Jenkins
 
+- Review Jenkins architecture and security
+- Automate the release creation on github repository through the github api.
+
 ---
-
-
 
 Launch local command
 ```
