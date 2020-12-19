@@ -4,5 +4,22 @@ on: [push, pull_request]
 
 jobs:
   build:
-    container:
-      image: rpmbuild/centos7
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          tags: rpmbuild:latest
+          file: ./Dockerfile
+          build-args: |
+            arg1=value1
+            arg2=value2
+      - name: Build the latest Docker image
+        run: |
+          mkdir artifcats
+          docker run --rm -v "$(pwd)"/artifacts:/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user 0 rpmbuild:latest
+          ls -al artifcats
