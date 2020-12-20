@@ -8,15 +8,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and push
+      - name: Build rpmbuild container
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: false
           tags: rpmbuild:latest
           file: ./Dockerfile
-      - name: Build the latest Docker image
+      - name: Run rpmbuild container
         run: |
           mkdir artifacts
           docker run --rm -v "$(pwd)"/artifacts:/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user 0 rpmbuild:latest
-          ls -al artifacts
