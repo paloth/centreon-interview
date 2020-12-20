@@ -6,6 +6,8 @@ License: GPL
 Packager: Paul LOUIS THERESE
 URL: https://docs.com
 Requires: bash
+Requires: jq
+Requires: curl
 BuildArch: noarch
 Source0: %{name}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}_%{version}-%{release}-XXXXXX)
