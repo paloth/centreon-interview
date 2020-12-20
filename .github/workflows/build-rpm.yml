@@ -20,6 +20,6 @@ jobs:
             arg2=value2
       - name: Build the latest Docker image
         run: |
-          mkdir artifcats
+          mkdir artifacts
           docker run --rm -v "$(pwd)"/artifacts:/artifacts -e VERSION=1 -e RELEASE=0 -e PACKAGE="list_repo" --user 0 rpmbuild:latest
-          ls -al artifcats
+          ls -al artifacts
