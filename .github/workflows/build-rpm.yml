@@ -15,9 +15,6 @@ jobs:
           push: false
           tags: rpmbuild:latest
           file: ./Dockerfile
-          build-args: |
-            arg1=value1
-            arg2=value2
       - name: Build the latest Docker image
         run: |
           mkdir artifacts
