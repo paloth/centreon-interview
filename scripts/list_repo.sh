@@ -2,6 +2,7 @@
 
 if [ -z $1 ]; then
     echo 'An organization name must be provided'
+    exit 1
 else
     # Set ORGA with the first args provided to the script
     ORGA=$1
